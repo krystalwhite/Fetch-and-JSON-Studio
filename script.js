@@ -3,11 +3,14 @@ window.addEventListener("load", function(){
       console.log(response);
       response.json().then(function(json) {
         let container = document.getElementById("container");
-        
+        let astronautCount = 0;
+
         for (let index in json) {
-            container.innerHTML += `
-            <div class = "astronaut">
-                <div class = "bio">      
+          astronautCount += 1;
+          
+          container.innerHTML += `
+            <div class = "astronaut">    
+            <div class = "bio">      
                 <h3>${json[index].firstName} ${json[index].lastName}</h3>
                 <ul> 
                     <li>Hours in space: ${json[index].hoursInSpace}</li>
@@ -17,7 +20,10 @@ window.addEventListener("load", function(){
                 </div>
                 <img class="avatar" src="${json[index].picture}">
                 </div>`;
+               
         }
+        container.innerHTML += `
+        <h3>The total number of astronauts is ${astronautCount}.</h3>`
             
         });
     });
