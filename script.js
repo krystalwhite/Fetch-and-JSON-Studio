@@ -4,21 +4,31 @@ window.addEventListener("load", function(){
       response.json().then(function(json) {
         let container = document.getElementById("container");
         let astronautCount = 0;
+        let colorChange = "";
 
-        for (let index in json) {
+        for (let i = 0; i < json.length; i++) {
           astronautCount += 1;
           
+          let orderedList = json.sort(function(a, b) {return a.hoursInSpace - b.hoursInSpace});
+          let orderedJson = orderedList[i];
+
+          for (let j = 0; j < orderedJson.length; j++) {
+            if (orderedJson[j].active) {
+              colorChange = "active";
+            }
+          }
+
           container.innerHTML += `
             <div class = "astronaut">    
             <div class = "bio">      
-                <h3>${json[index].firstName} ${json[index].lastName}</h3>
+                <h3>${orderedJson.firstName} ${orderedJson.lastName}</h3>
                 <ul> 
-                    <li>Hours in space: ${json[index].hoursInSpace}</li>
-                    <li>Active: ${json[index].active}</li>
-                    <li>Skills: ${json[index].skills}</li>
+                    <li>Hours in space: ${orderedJson.hoursInSpace}</li>
+                    <li class = ${colorChange}>Active: ${orderedJson.active}</li>
+                    <li>Skills: ${orderedJson.skills}</li>
                 </ul>
                 </div>
-                <img class="avatar" src="${json[index].picture}">
+                <img class="avatar" src="${orderedJson.picture}">
                 </div>`;
                
         }
